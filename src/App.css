@@ -1,38 +1,87 @@
-.App {
+html, body {
+  font-family: 'Prompt', sans-serif;
+  font-weight: 200;
+  line-height: 1.5;
+  padding: 1rem;
+  background-color: #1a1a1a;
+  color: #FFF;
+}
+
+h2 {
+  font-weight: 500;
+}
+
+h3 {
+  font-weight: 400;
+}
+
+a {
+  color: #FFF;
+  font-weight: 400;
+}
+
+strong {
+  text-transform: capitalize;
+  font-weight: 400;
+}
+
+button {
+  font-family: 'Prompt', sans-serif !important;
+  background-color: green; /* Green */
+  border: none;
+  color: #FFF;
+  font-weight: 500;
+  padding: 15px 32px;
   text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: auto;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+hr {
+  background: green;
+  border-color: green;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+textarea {
+  background-color: #2b2b2b;
+  width: 100%;
+  padding: 1rem;
+  color: #e4e4e4;
+  font-family: monospace;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+li {
+  margin: 0.5rem 0;
+}
+
+.code {
+  width: 100%;
+  color: #e4e4e4;
+  background-color: #2b2b2b;
+  font-family: monospace;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+  line-height: 2;
+}
+
+.App {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.button-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-around;
 }
 
-.App-link {
-  color: #61dafb;
+.school div {
+  padding: 0.5rem 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.mono {
+  font-family: monospace !important;
 }
