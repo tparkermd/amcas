@@ -9,6 +9,9 @@ import Welcome from './Welcome';
 // document.querySelectorAll('[href*=medSchoolDetails]').forEach(x => v.push(x.getAttribute('href').split('/').pop()));
 // copy(v);
 
+const getLocalStorage = (value) => localStorage && localStorage.getItem && localStorage.getItem(value);
+const setLocalStorage = (key, value) => localStorage && localStorage.setItem && localStorage.setItem(key, value);
+
 function App() {
     const [schools, setSchools] = useState([]);
     const [schoolIds, setSchoolIds] = useState([]);
@@ -57,8 +60,8 @@ function App() {
         }).catch(console.log);
     }
     
-    useEffect(() => setSchoolIds((localStorage.getItem('SCHOOL_IDS') || '').split(',') || []), [])
-    useEffect(() => localStorage.setItem('SCHOOL_IDS', schoolIds), [schoolIds])
+    useEffect(() => setSchoolIds((getLocalStorage('SCHOOL_IDS') || '').split(',') || []), [])
+    useEffect(() => setLocalStorage('SCHOOL_IDS', schoolIds), [schoolIds])
     useEffect(() => schoolIds.forEach(fetchData), [schoolIds]);
     
     const sortSpecialty = () => {
