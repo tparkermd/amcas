@@ -2,4 +2,4 @@
 Laziness begets talent. Grab all the LOR Data for AMCAS.
 
 # Instructions
-```npm start``` is your God.
+```npx start``` is your God.
