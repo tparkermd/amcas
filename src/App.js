@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import './App.css';
 import Instructions from './Instructions';
 import School from './School';
@@ -17,13 +18,33 @@ function App() {
     const [schoolIds, setSchoolIds] = useState([]);
     const fetchData = (id) => {
         fetch(`https://api.mec.aamc.org/msar-service/medSchool/${id}/profile/CURRENT_EDITION`)
-        .then(x => x.json())
-        .then(x => {
-            const data = x[0];
-            
-            let {
-                shortName,
-                medSchoolApplication: {
+            .then(x => x.json())
+            .then(x => {
+                const data = x[0];
+                
+                let {
+                    shortName,
+                    medSchoolApplication: {
+                        amcasLettersInd,
+                        amcasLettersMin,
+                        amcasLettersMax,
+                        amcasLettersText,
+                        letterGuidance,
+                        committeeLetterAccepted,
+                        individualLetterAccepted,
+                        letterPacketsAccepted,
+                    },
+                    medSchoolSpecialty: { psychiatry },
+                    medSchoolInformation: { missionStatement },
+                } = data;
+                
+                amcasLettersMax = amcasLettersMax || 1000;
+                amcasLettersMin = amcasLettersMin || 1;
+                letterGuidance = letterGuidance || 'No guidance, just suffering';
+                amcasLettersText = amcasLettersText || 'Sheesh, no additional information?';
+                
+                const constructedData = {
+                    shortName,
                     amcasLettersInd,
                     amcasLettersMin,
                     amcasLettersMax,
@@ -32,37 +53,20 @@ function App() {
                     committeeLetterAccepted,
                     individualLetterAccepted,
                     letterPacketsAccepted,
-                },
-                medSchoolSpecialty: { psychiatry },
-                medSchoolInformation: { missionStatement },
-            } = data;
-            
-            amcasLettersMax = amcasLettersMax || 1000;
-            amcasLettersMin = amcasLettersMin || 1;
-            letterGuidance = letterGuidance || 'No guidance, just suffering';
-            amcasLettersText = amcasLettersText || 'Sheesh, no additional information?';
-            
-            const constructedData = {
-                shortName,
-                amcasLettersInd,
-                amcasLettersMin,
-                amcasLettersMax,
-                amcasLettersText,
-                letterGuidance,
-                committeeLetterAccepted,
-                individualLetterAccepted,
-                letterPacketsAccepted,
-                psychiatry,
-                missionStatement
-            }
+                    psychiatry,
+                    missionStatement,
+                    id,
+                }
 
-            setSchools(prev => [...prev, constructedData])
-        }).catch(console.log);
+                setSchools(prev => [...prev, constructedData])
+            }).catch(console.log);
     }
     
     useEffect(() => setSchoolIds((getLocalStorage('SCHOOL_IDS') || '').split(',') || []), [])
     useEffect(() => setLocalStorage('SCHOOL_IDS', schoolIds), [schoolIds])
-    useEffect(() => schoolIds.forEach(fetchData), [schoolIds]);
+    useEffect(() => {
+        schoolIds.forEach((id) => !schools.find(school => school.id === id) && fetchData(id))
+    }, [schoolIds]);
     
     const sortSpecialty = () => {
         const unsortedSchools = [...schools];
@@ -86,8 +90,8 @@ function App() {
     }
 
     const updateSchoolIds = (e) => {
-        const val = e.target.value.replace('[', '').replace(']', '').replace(/\n|"|\s+/g, '').split(',');
-        Array.isArray(val) && setSchoolIds(val);
+        const ids = e.target.value.replace('[', '').replace(']', '').replace(/\n|"|\s+/g, '').split(',');
+        Array.isArray(ids) && setSchoolIds([...new Set(ids)]);
     };
 
     return (
@@ -116,7 +120,15 @@ function App() {
             <hr />
             <br />
 
-            { schools.map((school, index) => <School school={school} key={index} />) }
+            <ul>
+                { schools.map((school) => <li><a href={`#${school.id}`}>{school.shortName}</a></li>) }
+            </ul>
+
+            <br />
+            <hr />
+            <br />
+
+            { schools.map((school) => <School school={school} key={school.id} />) }
         </div>
     );
 }

@@ -1,3 +1,11 @@
+import copy from 'copy-to-clipboard';
+
+const instructionsText = `
+// Code to paste into the console to extract School IDs
+v = [];
+document.querySelectorAll('[href*=medSchoolDetails]').forEach(x => v.push(x.getAttribute('href').split('/').pop()));
+copy(v);
+`
 export default function Instructions() {
     return (
         <>
@@ -12,14 +20,9 @@ export default function Instructions() {
                         <div className="code">CMD (or CTRL) + Shift + P</div>
                         Then type "Console" and select the "Show Console" item.</li>
                     <li>Paste the below code into the Console and then hit enter.
-                        <div className="code">
-                            // Code to paste into the console to extract School IDs
-                            <br />
-                            v = [];
-                            <br />
-                            document.querySelectorAll('[href*=medSchoolDetails]').forEach(x => v.push(x.getAttribute('href').split('/').pop()));
-                            <br />
-                            copy(v);
+                        <div className="code" style={{ position: 'relative' }}>
+                            {instructionsText}
+                            <button className="copy" onClick={() => copy(instructionsText)}>COPY</button>
                         </div>
                     </li>
                 </ol>

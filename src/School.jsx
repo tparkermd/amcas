@@ -13,10 +13,11 @@ export default function School(props) {
         letterPacketsAccepted,
         psychiatry,
         missionStatement,
+        id,
     } = props.school;
 
     return (
-        <div className="school">
+        <div className="school" id={id}>
             <h2>{shortName}</h2>
             <SchoolDetail title="AMCAS letters participation" details={!!amcasLettersInd} />
             <SchoolDetail title="Min Letters" details={amcasLettersMin} />
