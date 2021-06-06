@@ -57,7 +57,7 @@ function App() {
         }).catch(console.log);
     }
     
-    useEffect(() => setSchoolIds(localStorage.getItem('SCHOOL_IDS').split(',') || []), [])
+    useEffect(() => setSchoolIds((localStorage.getItem('SCHOOL_IDS') || '').split(',') || []), [])
     useEffect(() => localStorage.setItem('SCHOOL_IDS', schoolIds), [schoolIds])
     useEffect(() => schoolIds.forEach(fetchData), [schoolIds]);
     
