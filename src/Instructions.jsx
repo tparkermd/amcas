@@ -2,6 +2,7 @@ import copy from 'copy-to-clipboard';
 
 const instructionsText = `
 // Code to paste into the console to extract School IDs
+
 v = [];
 document.querySelectorAll('[href*=medSchoolDetails]').forEach(x => v.push(x.getAttribute('href').split('/').pop()));
 copy(v);
@@ -22,7 +23,7 @@ export default function Instructions() {
                     <li>Paste the below code into the Console and then hit enter.
                         <div className="code" style={{ position: 'relative' }}>
                             {instructionsText}
-                            <button className="copy" onClick={() => copy(instructionsText)}>COPY</button>
+                            <button className="transparent copy" onClick={() => copy(instructionsText)}>COPY</button>
                         </div>
                     </li>
                 </ol>

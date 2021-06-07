@@ -1,21 +1,25 @@
 import { useEffect, useState } from 'react';
 
 import './App.css';
+import FixedDetailsContainer from './FixedDetailsContainer';
 import Instructions from './Instructions';
 import School from './School';
 import Welcome from './Welcome';
 
-// How to extract school IDs
-// v = [];
-// document.querySelectorAll('[href*=medSchoolDetails]').forEach(x => v.push(x.getAttribute('href').split('/').pop()));
-// copy(v);
-
 const getLocalStorage = (value) => localStorage && localStorage.getItem && localStorage.getItem(value);
 const setLocalStorage = (key, value) => localStorage && localStorage.setItem && localStorage.setItem(key, value);
+const ensureUnique = (arr) => [...new Set(arr)];
 
 function App() {
     const [schools, setSchools] = useState([]);
     const [schoolIds, setSchoolIds] = useState([]);
+    const [scienceList, setScienceList] = useState([]);
+    const [nonScienceList, setNonScienceList] = useState([]);
+    const [advocacyList, setAdvocacyList] = useState([]);
+    const [researchList, setResearchList] = useState([]);
+    
+    const getSchoolWithId = (id) => schools.find(school => school.id === id);
+
     const fetchData = (id) => {
         fetch(`https://api.mec.aamc.org/msar-service/medSchool/${id}/profile/CURRENT_EDITION`)
             .then(x => x.json())
@@ -94,6 +98,12 @@ function App() {
         Array.isArray(ids) && setSchoolIds([...new Set(ids)]);
     };
 
+    const addToScienceList = (id) => setScienceList(prev => ensureUnique([...prev, getSchoolWithId(id)]));
+    const addToNonScienceList = (id) => setNonScienceList(prev => ensureUnique([...prev, getSchoolWithId(id)]));
+    const addToAdvocacyList = (id) => setAdvocacyList(prev => ensureUnique([...prev, getSchoolWithId(id)]));
+    const addToResearchList = (id) => setResearchList(prev => ensureUnique([...prev, getSchoolWithId(id)]));
+
+
     return (
         <div className="App">
             <Welcome />
@@ -128,7 +138,23 @@ function App() {
             <hr />
             <br />
 
-            { schools.map((school) => <School school={school} key={school.id} />) }
+            { schools.map((school) => (
+                <School
+                    school={school}
+                    key={school.id}
+                    addToScienceList={addToScienceList}
+                    addToNonScienceList={addToNonScienceList}
+                    addToAdvocacyList={addToAdvocacyList}
+                    addToResearchList={addToResearchList}
+                />
+            )) }
+
+            <FixedDetailsContainer 
+                scienceList={scienceList}
+                nonScienceList={nonScienceList}
+                advocacyList={advocacyList}
+                researchList={researchList}
+            />
         </div>
     );
 }

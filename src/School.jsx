@@ -16,8 +16,15 @@ export default function School(props) {
         id,
     } = props.school;
 
+    const {
+        addToScienceList,
+        addToNonScienceList,
+        addToAdvocacyList,
+        addToResearchList,
+    } = props;
+
     return (
-        <div className="school" id={id}>
+        <div className="school" id={id} style={{ position: 'relative' }}>
             <h2>{shortName}</h2>
             <SchoolDetail title="AMCAS letters participation" details={!!amcasLettersInd} />
             <SchoolDetail title="Min Letters" details={amcasLettersMin} />
@@ -53,6 +60,21 @@ export default function School(props) {
             <br />
             <hr />
             <br />
+
+            <div className="helperTools">
+                <button className="transparent" onClick={() => addToScienceList(id)}>
+                    Add to Science List
+                </button>
+                <button className="transparent" onClick={() => addToNonScienceList(id)}>
+                    Add to Non-Science List
+                </button>
+                <button className="transparent" onClick={() => addToAdvocacyList(id)}>
+                    Add to Advocacy List
+                </button>
+                <button className="transparent" onClick={() => addToResearchList(id)}>
+                    Add to Research List
+                </button>
+            </div>
         </div>
     )
 }
