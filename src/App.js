@@ -17,6 +17,7 @@ function App() {
     const [nonScienceList, setNonScienceList] = useState([]);
     const [advocacyList, setAdvocacyList] = useState([]);
     const [researchList, setResearchList] = useState([]);
+    const [specialty, setSpecialty] = useState('');
     
     const getSchoolWithId = (id) => schools.find(school => school.id === id);
 
@@ -38,7 +39,7 @@ function App() {
                         individualLetterAccepted,
                         letterPacketsAccepted,
                     },
-                    medSchoolSpecialty: { psychiatry },
+                    medSchoolSpecialty,
                     medSchoolInformation: { missionStatement },
                 } = data;
                 
@@ -57,7 +58,7 @@ function App() {
                     committeeLetterAccepted,
                     individualLetterAccepted,
                     letterPacketsAccepted,
-                    psychiatry,
+                    medSchoolSpecialty,
                     missionStatement,
                     id,
                 }
@@ -74,7 +75,7 @@ function App() {
     
     const sortSpecialty = () => {
         const unsortedSchools = [...schools];
-        const sorted = unsortedSchools.sort((a, b) => b.psychiatry - a.psychiatry);
+        const sorted = unsortedSchools.sort((a, b) => b.medSchoolSpecialty[specialty] - a.medSchoolSpecialty[specialty]);
         
         setSchools(sorted);
     }
@@ -120,6 +121,15 @@ function App() {
             <hr />
             <br />
 
+            <div style={{ textAlign: 'center' }}>
+                Select Specialty
+                <select style={{ padding: '1rem', margin: '1rem auto 2rem', display: 'block' }} value={specialty} onChange={(e) => setSpecialty(e.target.value)}>
+                    { schools[0] && schools[0].medSchoolSpecialty && (
+                            Object.keys(schools[0].medSchoolSpecialty).map(sp => <option value={sp}>{sp}</option>)
+                        )
+                    }
+                </select>
+            </div>
             <div className="button-container">
                 <button onClick={sortSpecialty}> Sort Specialty % </button>
                 <button onClick={sortMax}> Sort Max Number LOR Accepted</button>
@@ -142,6 +152,7 @@ function App() {
                 <School
                     school={school}
                     key={school.id}
+                    specialty={specialty}
                     addToScienceList={addToScienceList}
                     addToNonScienceList={addToNonScienceList}
                     addToAdvocacyList={addToAdvocacyList}

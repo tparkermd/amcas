@@ -11,7 +11,7 @@ export default function School(props) {
         committeeLetterAccepted,
         individualLetterAccepted,
         letterPacketsAccepted,
-        psychiatry,
+        medSchoolSpecialty,
         missionStatement,
         id,
     } = props.school;
@@ -21,6 +21,7 @@ export default function School(props) {
         addToNonScienceList,
         addToAdvocacyList,
         addToResearchList,
+        specialty,
     } = props;
 
     return (
@@ -52,9 +53,9 @@ export default function School(props) {
             </div>
 
             <div>
-                <strong>Psychiatry %</strong>
+                <strong>{specialty} %</strong>
                 <br />
-                <span className="specialty">{psychiatry}</span>%
+                <span className="specialty">{medSchoolSpecialty[specialty]}</span>%
             </div>
 
             <br />
