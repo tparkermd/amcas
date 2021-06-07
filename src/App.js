@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import './App.css';
+
+import { CenteredText, Select, Button, TextArea, AppContainer, Main, ButtonContainer, HeadlineThree } from './Components.styled';
+import Separator from './Separator';
 import FixedDetailsContainer from './FixedDetailsContainer';
 import Instructions from './Instructions';
 import School from './School';
@@ -17,7 +20,7 @@ function App() {
     const [nonScienceList, setNonScienceList] = useState([]);
     const [advocacyList, setAdvocacyList] = useState([]);
     const [researchList, setResearchList] = useState([]);
-    const [specialty, setSpecialty] = useState('');
+    const [specialty, setSpecialty] = useState('psychiatry');
     
     const getSchoolWithId = (id) => schools.find(school => school.id === id);
 
@@ -27,6 +30,10 @@ function App() {
             .then(x => {
                 const data = x[0];
                 
+                if (!data || !Object.keys(data).length) {
+                    return;
+                }
+
                 let {
                     shortName,
                     medSchoolApplication: {
@@ -104,7 +111,6 @@ function App() {
     const addToAdvocacyList = (id) => setAdvocacyList(prev => ensureUnique([...prev, getSchoolWithId(id)]));
     const addToResearchList = (id) => setResearchList(prev => ensureUnique([...prev, getSchoolWithId(id)]));
 
-
     return (
         <div>
             <FixedDetailsContainer 
@@ -113,53 +119,52 @@ function App() {
                 advocacyList={advocacyList}
                 researchList={researchList}
             />
-            <div className="App">
-                <div className="Main">
+            <AppContainer>
+                <Main>
                     <Welcome />
                     <Instructions />
 
-                    <h3 className="mono">
+                    <HeadlineThree variations="mono">
                         Paste your copied School IDs into the box below.
-                    </h3>
-                    <textarea onChange={updateSchoolIds} value={schoolIds} rows="10" placeholder="Enter your school ids here." />
+                    </HeadlineThree>
+                    <TextArea onChange={updateSchoolIds} value={schoolIds} rows="10" placeholder="Enter your school ids here." />
                     
-                    <br />
-                    <br />
-                    <br />
-                    <hr />
-                    <br />
+                    { !!schools.length && (
+                        <>
+                            <br />
+                            <br />
+                            <Separator />
 
-                    <div style={{ textAlign: 'center' }}>
-                        Select Specialty
-                        <select 
-                            style={{ padding: '1rem', margin: '1rem auto 2rem', display: 'block' }}
-                            value={specialty}
-                            onChange={(e) => setSpecialty(e.target.value)}
-                        >
-                            { 
-                                schools[0] && schools[0].medSchoolSpecialty && (
-                                    Object.keys(schools[0].medSchoolSpecialty).map(sp => <option value={sp}>{sp}</option>)
-                                )
-                            }
-                        </select>
-                    </div>
-                    <div className="button-container">
-                        <button onClick={sortSpecialty}> Sort Specialty % </button>
-                        <button onClick={sortMax}> Sort Max Number LOR Accepted</button>
-                        <button onClick={sortName}> Sort Name</button>
-                    </div>
+                            <CenteredText>
+                                Select Specialty
+                                <Select
+                                    value={specialty}
+                                    onChange={(e) => setSpecialty(e.target.value)}
+                                >
+                                    { 
+                                        schools[0] && schools[0].medSchoolSpecialty && (
+                                            Object.keys(schools[0].medSchoolSpecialty)
+                                                .filter(sp => sp !== 'medicalSchoolId')
+                                                .map(sp => <option value={sp} key={sp}>{sp}</option>)
+                                        )
+                                    }
+                                </Select>
+                            </CenteredText>
+                            <ButtonContainer>
+                                <Button onClick={sortSpecialty}> Sort Specialty % </Button>
+                                <Button onClick={sortMax}> Sort Max Number LOR Accepted</Button>
+                                <Button onClick={sortName}> Sort Name</Button>
+                            </ButtonContainer>
 
-                    <br />
-                    <hr />
-                    <br />
+                            <Separator />
+                        </>
+                    )}
 
                     <ul>
-                        { schools.map((school) => <li><a href={`#${school.id}`}>{school.shortName}</a></li>) }
+                        { schools.map((school) => <li key={school.id}><a href={`#${school.id}`}>{school.shortName}</a></li>) }
                     </ul>
 
-                    <br />
-                    <hr />
-                    <br />
+                    <Separator />
 
                     { schools.map((school) => (
                         <School
@@ -172,8 +177,8 @@ function App() {
                             addToResearchList={addToResearchList}
                         />
                     )) }
-                </div>
-            </div>
+                </Main>
+            </AppContainer>
         </div>
     );
 }

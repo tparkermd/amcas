@@ -1,4 +1,5 @@
 import Accordion from './Accordion';
+import { FixedContainer } from './Components.styled';
 
 export default function FixedDetailsContainer(props) {
     const {
@@ -9,7 +10,7 @@ export default function FixedDetailsContainer(props) {
     } = props;
 
     return (
-        <div style={{ position: 'fixed', bottom: 0, left: 0, padding: '2rem', width: '22rem', background: 'rgba(0,0,0,0.4)', height: '100%', overflowY: 'auto' }}>
+        <FixedContainer>
             <Accordion
                 title="Science Professors"
                 hiddenDetails={ <ul> { scienceList.map(val => <li key={val.id}>{val.shortName}</li>) } </ul>}
@@ -33,7 +34,6 @@ export default function FixedDetailsContainer(props) {
                 hiddenDetails={ <ul> { researchList.map(val => <li key={val.id}>{val.shortName}</li>) } </ul>}
                 defaultOpen={true}
             />
-            
-        </div>
+        </FixedContainer>
     );
 }

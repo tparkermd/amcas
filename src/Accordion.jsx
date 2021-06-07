@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { HeadlineThree, LeftBorderContainer } from './Components.styled';
 
 export default function Accordion(props) {
     const {
@@ -12,11 +13,11 @@ export default function Accordion(props) {
 
     return (
         <div>
-            <strong onClick={() => setIsOpen(!isOpen)}>{title}</strong>
+            <HeadlineThree clickable onClick={() => setIsOpen(!isOpen)}>{title}</HeadlineThree>
             {isOpen && (
-                <div>
+                <LeftBorderContainer>
                     {hiddenDetails}
-                </div>
+                </LeftBorderContainer>
             )}
         </div>
     )

@@ -1,4 +1,6 @@
+import { Button, HelperTools, SchoolContainer } from './Components.styled';
 import SchoolDetail from "./SchoolDetail";
+import Separator from './Separator';
 
 export default function School(props) {
     const {
@@ -25,7 +27,7 @@ export default function School(props) {
     } = props;
 
     return (
-        <div className="school" id={id} style={{ position: 'relative' }}>
+        <SchoolContainer id={id} style={{ position: 'relative' }}>
             <h2>{shortName}</h2>
             <SchoolDetail title="AMCAS letters participation" details={!!amcasLettersInd} />
             <SchoolDetail title="Min Letters" details={amcasLettersMin} />
@@ -55,27 +57,25 @@ export default function School(props) {
             <div>
                 <strong>{specialty} %</strong>
                 <br />
-                <span className="specialty">{medSchoolSpecialty[specialty]}</span>%
+                <span>{medSchoolSpecialty[specialty]}</span>%
             </div>
 
-            <br />
-            <hr />
-            <br />
+            <Separator />
 
-            <div className="helperTools">
-                <button className="transparent" onClick={() => addToScienceList(id)}>
+            <HelperTools>
+                <Button variations="transparent" onClick={() => addToScienceList(id)}>
                     Add to Science List
-                </button>
-                <button className="transparent" onClick={() => addToNonScienceList(id)}>
+                </Button>
+                <Button variations="transparent" onClick={() => addToNonScienceList(id)}>
                     Add to Non-Science List
-                </button>
-                <button className="transparent" onClick={() => addToAdvocacyList(id)}>
+                </Button>
+                <Button variations="transparent" onClick={() => addToAdvocacyList(id)}>
                     Add to Advocacy List
-                </button>
-                <button className="transparent" onClick={() => addToResearchList(id)}>
+                </Button>
+                <Button variations="transparent" onClick={() => addToResearchList(id)}>
                     Add to Research List
-                </button>
-            </div>
-        </div>
+                </Button>
+            </HelperTools>
+        </SchoolContainer>
     )
 }
