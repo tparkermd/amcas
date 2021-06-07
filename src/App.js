@@ -106,66 +106,74 @@ function App() {
 
 
     return (
-        <div className="App">
-            <Welcome />
-            <Instructions />
-
-            <h3 className="mono">
-                Paste your copied School IDs into the box below.
-            </h3>
-            <textarea onChange={updateSchoolIds} value={schoolIds} rows="10" placeholder="Enter your school ids here." />
-            
-            <br />
-            <br />
-            <br />
-            <hr />
-            <br />
-
-            <div style={{ textAlign: 'center' }}>
-                Select Specialty
-                <select style={{ padding: '1rem', margin: '1rem auto 2rem', display: 'block' }} value={specialty} onChange={(e) => setSpecialty(e.target.value)}>
-                    { schools[0] && schools[0].medSchoolSpecialty && (
-                            Object.keys(schools[0].medSchoolSpecialty).map(sp => <option value={sp}>{sp}</option>)
-                        )
-                    }
-                </select>
-            </div>
-            <div className="button-container">
-                <button onClick={sortSpecialty}> Sort Specialty % </button>
-                <button onClick={sortMax}> Sort Max Number LOR Accepted</button>
-                <button onClick={sortName}> Sort Name</button>
-            </div>
-
-            <br />
-            <hr />
-            <br />
-
-            <ul>
-                { schools.map((school) => <li><a href={`#${school.id}`}>{school.shortName}</a></li>) }
-            </ul>
-
-            <br />
-            <hr />
-            <br />
-
-            { schools.map((school) => (
-                <School
-                    school={school}
-                    key={school.id}
-                    specialty={specialty}
-                    addToScienceList={addToScienceList}
-                    addToNonScienceList={addToNonScienceList}
-                    addToAdvocacyList={addToAdvocacyList}
-                    addToResearchList={addToResearchList}
-                />
-            )) }
-
+        <div>
             <FixedDetailsContainer 
                 scienceList={scienceList}
                 nonScienceList={nonScienceList}
                 advocacyList={advocacyList}
                 researchList={researchList}
             />
+            <div className="App">
+                <div className="Main">
+                    <Welcome />
+                    <Instructions />
+
+                    <h3 className="mono">
+                        Paste your copied School IDs into the box below.
+                    </h3>
+                    <textarea onChange={updateSchoolIds} value={schoolIds} rows="10" placeholder="Enter your school ids here." />
+                    
+                    <br />
+                    <br />
+                    <br />
+                    <hr />
+                    <br />
+
+                    <div style={{ textAlign: 'center' }}>
+                        Select Specialty
+                        <select 
+                            style={{ padding: '1rem', margin: '1rem auto 2rem', display: 'block' }}
+                            value={specialty}
+                            onChange={(e) => setSpecialty(e.target.value)}
+                        >
+                            { 
+                                schools[0] && schools[0].medSchoolSpecialty && (
+                                    Object.keys(schools[0].medSchoolSpecialty).map(sp => <option value={sp}>{sp}</option>)
+                                )
+                            }
+                        </select>
+                    </div>
+                    <div className="button-container">
+                        <button onClick={sortSpecialty}> Sort Specialty % </button>
+                        <button onClick={sortMax}> Sort Max Number LOR Accepted</button>
+                        <button onClick={sortName}> Sort Name</button>
+                    </div>
+
+                    <br />
+                    <hr />
+                    <br />
+
+                    <ul>
+                        { schools.map((school) => <li><a href={`#${school.id}`}>{school.shortName}</a></li>) }
+                    </ul>
+
+                    <br />
+                    <hr />
+                    <br />
+
+                    { schools.map((school) => (
+                        <School
+                            school={school}
+                            key={school.id}
+                            specialty={specialty}
+                            addToScienceList={addToScienceList}
+                            addToNonScienceList={addToNonScienceList}
+                            addToAdvocacyList={addToAdvocacyList}
+                            addToResearchList={addToResearchList}
+                        />
+                    )) }
+                </div>
+            </div>
         </div>
     );
 }

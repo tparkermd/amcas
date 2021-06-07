@@ -6,7 +6,6 @@ html, body {
   font-family: 'Prompt', sans-serif;
   font-weight: 200;
   line-height: 1.5;
-  padding: 1rem;
   background-color: #1a1a1a;
   color: #FFF;
 }
@@ -74,7 +73,13 @@ li {
 }
 
 .App {
+  width: calc(100% - 22rem);
+  float: right;
+}
+
+.Main {
   max-width: 800px;
+  padding: 1rem;
   margin: 0 auto;
 }
 
@@ -117,7 +122,7 @@ li {
   padding: 1rem;
   opacity: 0.1;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 0.5rem;
   transition: all 250ms ease;
 }
@@ -128,4 +133,8 @@ li {
 
 .helperTools:hover button{
   opacity: 1;
+}
+
+select {
+  text-transform: capitalize;
 }

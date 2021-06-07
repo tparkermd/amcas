@@ -1,12 +1,14 @@
 import { useState } from 'react';
 
 export default function Accordion(props) {
-    const [isOpen, setIsOpen] = useState(false);
-
     const {
         title,
         hiddenDetails,
+        defaultOpen,
     } = props;
+
+    const [isOpen, setIsOpen] = useState(defaultOpen);
+
 
     return (
         <div>
